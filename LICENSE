@@ -1,0 +1,65 @@
+Nexus DevTools — End User Licence Agreement
+Copyright (c) 2026 Swfte. All rights reserved.
+
+This End User Licence Agreement (the "Agreement") governs your use of Nexus DevTools in
+the compiled binary form distributed by Swfte, together with its accompanying documentation
+(the "Software"). The Software is licensed, not sold. By downloading, installing, or using
+the Software you agree to this Agreement and to the Swfte Terms of Service at
+https://www.swfte.com/terms (the "Terms"). If you do not agree, do not download, install, or use
+the Software.
+
+1. Licence Grant. Subject to your compliance with this Agreement and the Terms, Swfte grants
+   you a non-exclusive, non-transferable, revocable, worldwide licence to download, install,
+   and use the Software for your internal business or personal purposes. This licence takes
+   effect automatically when you obtain a copy of the Software; no separate signed agreement
+   is required.
+
+2. Restrictions. You may not, except as expressly permitted in writing by Swfte:
+   (a) redistribute, republish, sublicense, sell, rent, lease, or host the Software as a
+       service for third parties;
+   (b) modify or create derivative works of the Software for redistribution;
+   (c) reverse engineer, decompile, or disassemble the Software, or attempt to derive its
+       source code, structure, or organisation, except and only to the extent this
+       restriction is prohibited by applicable law (including, where applicable, the limited
+       interoperability rights under Article 6 of EU Directive 2009/24/EC or equivalent local
+       law);
+   (d) remove, obscure, or alter any proprietary notice; or
+   (e) use the Software to develop or benchmark a competing product.
+
+3. Source Code. This Agreement covers the distributed binary form only. The Software's source
+   code is not published, is not licensed to you, and remains the confidential and proprietary
+   property of Swfte. Nothing in this Agreement grants you any right in that source code.
+
+4. Accounts, Services, and Telemetry. The Software connects to Swfte-operated services and
+   requires a Swfte account. It captures usage telemetry and transmits it to those services as
+   described in the documentation and controlled by the privacy-tier setting. The Software also
+   enforces a signed policy issued by Swfte, which may require a minimum version, suspend
+   access, or revoke a machine's credential. Your use of the services, and Swfte's handling of
+   telemetry, are governed by the Terms and by Swfte's Privacy Policy. By using the Software you
+   consent to this behaviour.
+
+5. Third-Party Components. The Software includes third-party components under their own
+   licences; run `nexus licenses` for the applicable notices. Those licences govern those
+   components only and are not affected by this Agreement.
+
+6. Ownership. Swfte retains all right, title, and interest in and to the Software, including
+   all intellectual property rights. No ownership is transferred by this Agreement.
+
+7. No Warranty. THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTY OF ANY
+   KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+
+8. Limitation of Liability. IN NO EVENT SHALL SWFTE BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN
+   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+9. Termination. This Agreement and the licence it grants terminate automatically if you breach
+   any of its terms. Swfte may also suspend or terminate the licence in accordance with the
+   Terms. On termination you must cease all use and destroy all copies of the Software in your
+   possession or control.
+
+10. General. This Agreement, together with the Terms and the Privacy Policy, is the entire
+    agreement between you and Swfte regarding the Software. If any provision is held
+    unenforceable, the remaining provisions remain in effect.
+
+For licensing inquiries, contact: sales@swfte.com

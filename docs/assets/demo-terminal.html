@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1440px;height:900px;overflow:hidden;font-family:-apple-system,"SF Pro Text","Helvetica Neue",sans-serif}
+  .desktop{position:relative;width:1440px;height:900px;
+    background:url('file:///tmp/nexus-wall.jpg') center/cover no-repeat #1a2740;}
+  /* menu bar */
+  .menubar{position:absolute;top:0;left:0;right:0;height:26px;background:rgba(20,22,28,.55);
+    backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:flex;align-items:center;
+    padding:0 14px;color:#fff;font-size:13.5px;z-index:5;box-shadow:0 1px 0 rgba(255,255,255,.06)}
+  .menubar .apple{font-size:15px;margin-right:16px}
+  .menubar b{font-weight:700;margin-right:18px}
+  .menubar .m{opacity:.9;margin-right:16px;font-weight:400}
+  .menubar .right{margin-left:auto;display:flex;align-items:center;gap:14px;font-size:13px;opacity:.95}
+  .menubar .right svg{display:block}
+  /* terminal window */
+  .win{position:absolute;top:96px;left:150px;width:1140px;height:706px;border-radius:11px;overflow:hidden;
+    background:rgba(22,24,30,.97);box-shadow:0 40px 120px -30px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.07);}
+  .tb{height:40px;background:linear-gradient(#31343d,#2a2d35);display:flex;align-items:center;padding:0 14px;
+    position:relative;border-bottom:1px solid rgba(0,0,0,.35)}
+  .dot{width:12px;height:12px;border-radius:50%;margin-right:8px}
+  .r{background:#ff5f57;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.2)}.y{background:#febc2e}.g{background:#28c840}
+  .tb .tt{position:absolute;left:0;right:0;text-align:center;color:#c9ccd4;font-size:13px;font-weight:600;
+    font-family:-apple-system,sans-serif;pointer-events:none}
+  .term{height:666px;padding:18px 22px;background:rgba(19,21,27,.97);
+    font-family:"SF Mono","JetBrains Mono",ui-monospace,Menlo,monospace;font-size:15px;line-height:1.6;
+    color:#e7eaf0;overflow:hidden}
+  .line{white-space:pre-wrap;word-break:break-word}
+  .pr{color:#28c76f;font-weight:700}.pdir{color:#57b6ff}
+  .zsh{color:#c3cad6}
+  .cmd{color:#fff}
+  .dim{color:#8b93a3}.muted{color:#5f6675}
+  .ok{color:#28c76f;font-weight:700}.hd{color:#57b6ff;font-weight:800}.rule{color:#3a3f4b}
+  .bl{color:#57b6ff}.aq{color:#22c98a}.or{color:#ff7a45}.ye{color:#ffbf3b}.vi{color:#a99cff}
+  .save{color:#28c76f;font-weight:800}.money{color:#e7eaf0;font-weight:700}
+  .b{font-weight:700}
+  .cursor{display:inline-block;width:9px;height:17px;background:#e7eaf0;transform:translateY(3px);border-radius:1px}
+  .cursor.off{opacity:0}
+  /* dock */
+  .dock{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);height:62px;padding:6px 10px;
+    background:rgba(255,255,255,.18);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+    border-radius:18px;display:flex;gap:10px;align-items:center;box-shadow:0 8px 30px rgba(0,0,0,.35),inset 0 0 0 .5px rgba(255,255,255,.25);z-index:4}
+  .ico{width:50px;height:50px;object-fit:contain;filter:drop-shadow(0 4px 6px rgba(0,0,0,.28))}
+</style>
+</head>
+<body>
+<div class="desktop">
+  <div class="menubar">
+    <img src="file:///tmp/nexus-icons/apple-white.png" style="height:15px;margin-right:16px;opacity:.95"><b>Terminal</b>
+    <span class="m">Shell</span><span class="m">Edit</span><span class="m">View</span><span class="m">Window</span><span class="m">Help</span>
+    <span class="right">
+      <svg width="22" height="12" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="20" height="10" rx="2.5" stroke="#fff" stroke-opacity=".7" stroke-width="1"/><rect x="2.5" y="2.5" width="15" height="7" rx="1.2" fill="#fff"/><rect x="22" y="4" width="1.5" height="4" rx=".75" fill="#fff" fill-opacity=".7"/></svg>
+      <svg width="18" height="13" viewBox="0 0 18 13" fill="#fff" fill-opacity=".95"><path d="M9 13l2.2-2.6a3 3 0 00-4.4 0L9 13zM9 8.4l4.5-5.3a9 9 0 00-9 0L9 8.4zM9 3.6l6.7-4a15 15 0 00-13.4 0L9 3.6z"/></svg>
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#fff" stroke-opacity=".9" stroke-width="1.4"/><path d="M11 11l3.5 3.5" stroke="#fff" stroke-opacity=".9" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <span id="clock" style="font-weight:600">Mon 9:41:00</span>
+    </span>
+  </div>
+
+  <div class="win">
+    <div class="tb"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="tt">nexus — claude — 120×34</span></div>
+    <div class="term" id="term"></div>
+  </div>
+
+  <div class="dock">
+    <img class="ico" src="file:///tmp/nexus-icons/finder.png">
+    <img class="ico" src="file:///tmp/nexus-icons/launchpad.png">
+    <img class="ico" src="file:///tmp/nexus-icons/message.png">
+    <img class="ico" src="file:///tmp/nexus-icons/mail.png">
+    <img class="ico" src="file:///tmp/nexus-icons/maps.png">
+    <img class="ico" src="file:///tmp/nexus-icons/photos.png">
+    <img class="ico" src="file:///tmp/nexus-icons/notes.png">
+    <img class="ico" src="file:///tmp/nexus-icons/music.png">
+    <img class="ico" src="file:///tmp/nexus-icons/calculator.png">
+    <img class="ico" src="file:///tmp/nexus-icons/terminal.png">
+    <img class="ico" src="file:///tmp/nexus-icons/appstore.png">
+    <img class="ico" src="file:///tmp/nexus-icons/preferences.png">
+  </div>
+</div>
+<script>
+const FPS = 13;
+const frame = parseInt(new URLSearchParams(location.search).get('frame')||'0',10);
+let t = frame*(1000/FPS);
+// Live menu-bar clock: base 9:41:00 + elapsed seconds, so it visibly ticks across the capture.
+(function(){
+  const base = 9*3600 + 41*60;               // 9:41:00
+  const secs = base + Math.floor(t/1000);
+  const hh = Math.floor(secs/3600), mm = Math.floor((secs%3600)/60), ss = secs%60;
+  const el = document.getElementById('clock');
+  if (el) el.textContent = `Mon ${hh}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+})();
+// Pixel-art Claude mascot (inline SVG, no external asset) — rendered in the wrapped-agent banner.
+function buildMascot(){
+  const MAP=[
+    "..XXXXXXXXXX..",
+    ".XXXXXXXXXXXX.",
+    "XXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXX",
+    "XXooXXXXXXooXX",
+    "XXooXXXXXXooXX",
+    "XXXXXXXXXXXXXX",
+    "XXXXXXXXXXXXXX",
+    "XX.XXXXXXXX.XX",
+    "XX.XXXXXXXX.XX"
+  ];
+  const P=6, W=MAP[0].length*P, H=MAP.length*P;
+  let r='';
+  for(let y=0;y<MAP.length;y++) for(let x=0;x<MAP[y].length;x++){
+    const c=MAP[y][x]; if(c==='.') continue;
+    const fill = c==='o' ? '#15171d' : '#c9704f';
+    r+=`<rect x="${x*P}" y="${y*P}" width="${P}" height="${P}" fill="${fill}"/>`;
+  }
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" shape-rendering="crispEdges" style="display:block">${r}</svg>`;
+}
+const MASCOT=buildMascot();
+const CPS = 32;
+const steps=[];
+const type=(s)=>steps.push({kind:'type',s,dur:(s.length/CPS)*1000});
+const out=(html)=>steps.push({kind:'out',html});
+const wait=(ms)=>steps.push({kind:'wait',dur:ms});
+const newpr=()=>steps.push({kind:'newpr'});
+const RULE='<span class="rule">────────────────────────────────────────────────────────────────</span>';
+
+// ── nexus wrap claude  (faithful to real output; data sanitised) ──
+type('nexus wrap claude'); wait(420);
+out('  <span class="hd">NEXUS</span>  <span class="dim">Agent Telemetry &amp; Governance</span>            <span class="muted">v0.2.1  ·  Enterprise</span>');
+out('  '+RULE);
+out('       <span class="dim">Account</span>        Acme, Inc. · <span class="b">OWNER</span> · workspace 128');
+out('       <span class="dim">Repository</span>     acme/api · main @ a1b2c3d');
+out('  <span class="ok">✓</span> Session hooks     <span class="dim">6 events registered</span>');
+out('  <span class="ok">✓</span> Token filter      <span class="dim">rtk · shell output filtered before it reaches the model</span>');
+out('  <span class="ok">✓</span> Telemetry         <span class="dim">collector online · capturing to the local ledger</span>');
+out('  <span class="ok">✓</span> Remote control    <span class="dim">armed · approvals ≥ low risk go to the dashboard</span>');
+out('  <span class="ok">✓</span> Compression       <span class="dim">proxy online · model traffic routed locally</span>');
+out('  '+RULE);
+out('  <span class="bl">→</span>  <span class="b">claude</span>   <span class="muted">session sess_1785359428</span>'); wait(700);
+
+// ── the wrapped agent boots inside the Nexus session (Claude Code) ──
+out('  <div style="display:flex;gap:16px;align-items:flex-start;padding-top:6px">'
+    +'<div>'+MASCOT+'</div>'
+    +'<div style="line-height:1.5;padding-top:2px">'
+      +'<div><span class="b" style="color:#fff">Claude Code</span> <span class="dim">v2.1.220</span></div>'
+      +'<div class="dim">Opus 5 (1M context) with high effort · Claude Max</div>'
+      +'<div class="dim">~/Projects/acme/api</div>'
+    +'</div></div>');
+out('&nbsp;');
+out('  <span class="ye">⚠ 2 MCP servers need authentication</span> <span class="dim">· run /mcp</span>'); wait(900);
+out('  '+RULE);
+out('  <span class="dim">›</span>  <span class="cursor"></span>');
+out('  <span class="or b">▶▶ auto mode on</span> <span class="dim">(shift+tab to cycle) · ← for agents</span>       <span class="muted">●</span> <span class="dim">high</span> <span class="muted">· /effort</span>'); wait(1600);
+
+// ── nexus savings ──
+newpr();
+type('nexus savings'); wait(380);
+out('  <span class="save">💸  Nexus saved you $1,857.22</span>  <span class="dim">(53.5% of $3,474.41)</span>');
+out('      <span class="dim">you paid <span class="money">$1,617.19</span> instead of $3,474.41 over the last 14 days</span>');
+out('      <span class="dim">how it was achieved:</span>');
+out('        <span class="bl">Nexus Compression</span>     <span class="money">  $314.96</span>  <span class="bl">████</span>                <span class="dim">63.1M tokens (measured)</span>');
+out('        <span class="or">Command Filtering</span>   <span class="money">$1,541.82</span>  <span class="or">███████████████████</span> <span class="dim">308.4M tokens (list price)</span>');
+out('        <span class="aq">Context Recall</span>      <span class="money">    $0.44</span>  <span class="dim">served from the reference graph · 88,610 tokens</span>');
+out('        <span class="ye">Dynamic Routing</span>     <span class="money">   in flight</span>  <span class="dim">turns shifted to the cheapest sufficient model</span>');
+out('      <span class="dim">Prompt Cache        </span> <span class="money">$8,054.73</span>  <span class="muted">provider-native, not billed by Nexus</span>');
+out('      <span class="muted">measured = seen on the wire · learns per turn — the gap widens the longer it runs</span>'); wait(1700);
+
+let TOTAL=0; for(const s of steps) TOTAL+=(s.dur||0); window.__TOTAL_MS=TOTAL; window.__FPS=FPS;
+
+const term=document.getElementById('term');
+let html='', clock=0, typedShown='';
+const PROMPT='<span class="zsh">user@Users-MacBook-Pro ~ %</span> ';
+let curLine=PROMPT;
+function flush(withCursor){
+  let body=html;
+  if(curLine!==null){
+    const cur=withCursor?'<span class="cursor'+(Math.floor(t/450)%2?' off':'')+'"></span>':'';
+    body+='<div class="line">'+curLine+typedShown+cur+'</div>';
+  }
+  term.innerHTML='<div class="ti">'+body+'</div>';
+  // Auto-scroll like a real terminal: keep the newest output pinned to the bottom.
+  const ti=term.firstChild;
+  const avail=term.clientHeight-36;            // 18px top + 18px bottom padding
+  const over=ti.offsetHeight-avail;
+  if(over>0) ti.style.transform='translateY('+(-over)+'px)';
+}
+try{
+for(const s of steps){
+  if(s.kind==='type'){
+    const start=clock,end=clock+s.dur;
+    if(t<start){typedShown='';break;}
+    const n=t>=end?s.s.length:Math.floor(((t-start)/s.dur)*s.s.length);
+    typedShown='<span class="cmd">'+s.s.slice(0,n)+'</span>';
+    if(t<end){flush(true);throw 0;}
+    typedShown='<span class="cmd">'+s.s+'</span>'; clock=end;
+  }else if(s.kind==='out'){
+    if(t<clock)break;
+    if(curLine!==null){html+='<div class="line">'+curLine+typedShown+'</div>';curLine=null;typedShown='';}
+    html+='<div class="line">'+s.html+'</div>'; clock+=85;
+    if(t<clock){flush(false);throw 0;}
+  }else if(s.kind==='newpr'){
+    html+='<div class="line">&nbsp;</div>'; curLine=PROMPT; typedShown='';
+  }else if(s.kind==='wait'){
+    if(t<clock+s.dur){flush(curLine!==null);throw 0;} clock+=s.dur;
+  }
+}
+flush(true);
+}catch(e){/* rendered up to t */}
+</script>
+</body>
+</html>

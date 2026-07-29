@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  :root{
+    --plane:#f9f9f7; --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
+    --grid:#e1e0d9; --ring:rgba(11,11,11,.10);
+    --blue:#2a78d6; --good:#0ca30c; --warning:#eda100; --critical:#d03b3b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--plane);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink)}
+  .wrap{width:1240px;padding:56px 60px 48px;position:relative}
+  .brand{position:absolute;top:56px;right:60px;font-size:15px;font-weight:700}
+  .brand span{color:var(--blue)}
+  .eyebrow{font-size:15px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+  h1{font-size:44px;line-height:1.05;letter-spacing:-.02em;margin:10px 0 6px}
+  .sub{font-size:19px;color:var(--ink2);max-width:960px;line-height:1.45}
+
+  .flow{display:flex;align-items:stretch;gap:0;margin-top:36px}
+  .node{background:var(--surface);border:1px solid var(--ring);border-radius:16px;padding:22px 22px;box-shadow:0 14px 34px -26px rgba(11,11,11,.4)}
+  .node .k{font-size:12.5px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--muted)}
+  .node .t{font-size:19px;font-weight:700;margin-top:6px;line-height:1.15}
+  .node .d{font-size:13.5px;color:var(--ink2);margin-top:6px;line-height:1.4}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+
+  .agent{width:250px;display:flex;flex-direction:column;justify-content:center}
+  .req{margin-top:12px;background:#f3f4f6;border:1px solid var(--grid);border-radius:9px;padding:9px 11px;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--ink)}
+  .arrow{flex:0 0 46px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:26px}
+
+  .gate{width:300px;border:2px solid var(--blue);background:#f4f8fd;display:flex;flex-direction:column;justify-content:center;position:relative}
+  .gate .badge{position:absolute;top:-13px;left:22px;background:var(--blue);color:#fff;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:20px}
+  .gate .t{font-size:21px}
+  .props{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+  .prop{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:var(--ink2);line-height:1.35}
+  .prop b{color:var(--ink);font-weight:700}
+  .chk{color:var(--blue);font-weight:800;flex:0 0 auto}
+
+  .out{flex:1;display:flex;flex-direction:column;gap:12px;justify-content:center}
+  .dec{display:grid;grid-template-columns:96px 1fr;align-items:center;border-radius:12px;padding:12px 14px;border:1px solid var(--ring)}
+  .tag{font-size:14px;font-weight:800;letter-spacing:.04em;padding:6px 0;border-radius:8px;text-align:center}
+  .dec .body{padding-left:14px;font-size:13.5px;color:var(--ink2);line-height:1.35}
+  .dec .body b{color:var(--ink)}
+  .allow{background:#effaef} .allow .tag{background:#d9f2d9;color:#0a7d0a}
+  .ask{background:#fdf7e8} .ask .tag{background:#fbeecb;color:#9a6c00}
+  .deny{background:#fdecec} .deny .tag{background:#f8d6d6;color:#b12b2b}
+
+  .modes{display:flex;gap:0;margin-top:30px;background:var(--surface);border:1px solid var(--ring);border-radius:14px;overflow:hidden}
+  .mode{flex:1;padding:18px 22px}
+  .mode+.mode{border-left:1px solid var(--grid)}
+  .mode .mk{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+  .mode .mk.enforce{color:var(--critical)} .mode .mk.audit{color:var(--warning)} .mode .mk.off{color:var(--muted)}
+  .mode p{font-size:13.5px;color:var(--ink2);margin-top:5px;line-height:1.4}
+  .foot{display:flex;gap:26px;margin-top:26px;font-size:14.5px;color:var(--ink2);align-items:center}
+  .foot b{color:var(--ink)}
+  .kbd{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#eef4fc;color:var(--blue);border:1px solid #d7e6f9;border-radius:7px;padding:4px 10px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><span>◆</span> Nexus</div>
+  <div class="eyebrow">Governance &amp; enforcement</div>
+  <h1>Every action is judged before it runs.</h1>
+  <p class="sub">The agent proposes a tool call; Nexus decides — <b>on the machine, synchronously,
+  before execution.</b> A network problem can't route around it, because the decision never leaves
+  the loop.</p>
+
+  <div class="flow">
+    <div class="node agent">
+      <div class="k">Coding agent</div>
+      <div class="t">wants to run a tool</div>
+      <div class="req mono">$ rm -rf ./build /etc</div>
+      <div class="req mono">write ../../.ssh/id_rsa</div>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <div class="node gate">
+      <div class="badge">nexus · pre-tool hook</div>
+      <div class="k">Local policy</div>
+      <div class="t">evaluate</div>
+      <div class="props">
+        <div class="prop"><span class="chk">✓</span><span><b>On-machine</b> — no network in the path</span></div>
+        <div class="prop"><span class="chk">✓</span><span><b>Synchronous</b> — the agent waits for the verdict</span></div>
+        <div class="prop"><span class="chk">✓</span><span><b>Unbypassable</b> — a network failure can't skip it</span></div>
+        <div class="prop"><span class="chk">✓</span><span>Recorded either way, anchored to the commit</span></div>
+      </div>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <div class="out">
+      <div class="dec allow"><div class="tag">ALLOW</div><div class="body"><b>Safe &amp; in-bounds.</b> Runs untouched; captured for the audit trail.</div></div>
+      <div class="dec ask"><div class="tag">ASK</div><div class="body"><b>Needs a human.</b> Developer confirms; the choice can be learned so it isn't asked twice.</div></div>
+      <div class="dec deny"><div class="tag">DENY</div><div class="body"><b>Out of bounds.</b> Blocked before it runs; reason shown to the developer, finding recorded.</div></div>
+    </div>
+  </div>
+
+  <div class="modes">
+    <div class="mode"><div class="mk enforce">ENFORCE</div><p>Deny outright. The guardrail is live — dangerous calls are stopped.</p></div>
+    <div class="mode"><div class="mk audit">AUDIT</div><p>Record what <i>would</i> have been denied, but allow it — roll policy out with zero disruption first.</p></div>
+    <div class="mode"><div class="mk off">OFF</div><p>Capture only. Full traceability, no blocking.</p></div>
+  </div>
+
+  <div class="foot">
+    <span><b>Stops:</b> destructive commands · out-of-bounds paths · secret exfiltration · unattended supply-chain installs</span>
+  </div>
+  <div class="foot">
+    <span class="kbd">$ nexus audit &lt;session&gt;</span>
+    <span>prompt → change → finding → rationale — <b>what happened, not what was claimed</b></span>
+  </div>
+</div>
+</body>
+</html>

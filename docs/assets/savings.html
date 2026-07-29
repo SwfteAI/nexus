@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  :root{
+    --plane:#f9f9f7; --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
+    --grid:#e1e0d9; --ring:rgba(11,11,11,.10);
+    --blue:#2a78d6; --orange:#eb6834; --aqua:#1baf7a; --yellow:#eda100; --violet:#4a3aa7;
+    --good:#0ca30c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--plane);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink)}
+  .wrap{width:1240px;padding:56px 60px 48px}
+  .eyebrow{font-size:15px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+  h1{font-size:44px;line-height:1.05;letter-spacing:-.02em;margin:10px 0 6px}
+  .sub{font-size:19px;color:var(--ink2);max-width:900px;line-height:1.45}
+  .card{background:var(--surface);border:1px solid var(--ring);border-radius:18px;box-shadow:0 1px 0 rgba(11,11,11,.03),0 18px 40px -28px rgba(11,11,11,.35)}
+  .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:0;margin-top:34px}
+  .left{padding:34px 36px;border-right:1px solid var(--grid)}
+  .right{padding:34px 36px}
+  .lbl{font-size:13px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+
+  /* waterfall */
+  .wf{display:flex;flex-direction:column;gap:14px}
+  .row{display:grid;grid-template-columns:150px 1fr 74px;align-items:center;gap:14px}
+  .rlab{font-size:15px;font-weight:600;color:var(--ink)}
+  .rlab small{display:block;font-weight:500;color:var(--muted);font-size:12.5px;margin-top:2px}
+  .track{position:relative;height:26px;background:#f0efec;border-radius:6px;overflow:hidden}
+  .bar{position:absolute;top:0;left:0;height:100%;border-radius:6px}
+  .cut{position:absolute;top:0;height:100%;border-radius:6px;opacity:.9}
+  .val{font-size:15px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+  .val.down{color:var(--good)}
+
+  /* mechanisms */
+  .mech{display:flex;flex-direction:column;gap:16px}
+  .m{display:grid;grid-template-columns:12px 1fr;gap:14px;align-items:start}
+  .dot{width:12px;height:12px;border-radius:3px;margin-top:5px}
+  .m h3{font-size:16.5px;font-weight:700}
+  .m p{font-size:14px;color:var(--ink2);line-height:1.42;margin-top:2px}
+  .foot{display:flex;align-items:center;gap:12px;margin-top:30px;padding-top:22px;border-top:1px solid var(--grid);font-size:15px;color:var(--ink2)}
+  .pill{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;background:#eef4fc;color:var(--blue);border:1px solid #d7e6f9;border-radius:7px;padding:5px 11px;font-weight:600}
+  .note{font-size:12.5px;color:var(--muted);margin-top:14px}
+  .brand{position:absolute;top:56px;right:60px;font-size:15px;font-weight:700;color:var(--ink)}
+  .brand span{color:var(--blue)}
+</style>
+</head>
+<body>
+<div class="wrap" style="position:relative">
+  <div class="brand"><span>◆</span> Nexus</div>
+  <div class="eyebrow">The efficiency layer</div>
+  <h1>Every token is a cost to justify.</h1>
+  <p class="sub">Nexus sits inside the agent's loop and cuts spend four ways — and <b>measures each
+  one on the wire</b>, so the saving is a number you can audit, not a claim.</p>
+
+  <div class="card grid">
+    <div class="left">
+      <div class="lbl">Cost of a turn — where it goes</div>
+      <div class="wf">
+        <div class="row">
+          <div class="rlab">Baseline<small>agent, unwrapped</small></div>
+          <div class="track"><div class="bar" style="width:100%;background:#cdd8e6"></div></div>
+          <div class="val">100%</div>
+        </div>
+        <div class="row">
+          <div class="rlab">Compress context<small>pay for meaning, not bulk</small></div>
+          <div class="track"><div class="bar" style="width:100%;background:#eef1f5"></div><div class="cut" style="left:74%;width:26%;background:var(--blue)"></div></div>
+          <div class="val down">−26%</div>
+        </div>
+        <div class="row">
+          <div class="rlab">Filter tool output<small>logs never hit the model</small></div>
+          <div class="track"><div class="bar" style="width:74%;background:#eef1f5"></div><div class="cut" style="left:56%;width:18%;background:var(--orange)"></div></div>
+          <div class="val down">−18%</div>
+        </div>
+        <div class="row">
+          <div class="rlab">Reuse prior work<small>recall instead of re-derive</small></div>
+          <div class="track"><div class="bar" style="width:56%;background:#eef1f5"></div><div class="cut" style="left:39%;width:17%;background:var(--aqua)"></div></div>
+          <div class="val down">−17%</div>
+        </div>
+        <div class="row">
+          <div class="rlab">Route by outcome<small>cheapest model that works</small></div>
+          <div class="track"><div class="bar" style="width:39%;background:#eef1f5"></div><div class="cut" style="left:27%;width:12%;background:var(--yellow)"></div></div>
+          <div class="val down">−12%</div>
+        </div>
+        <div class="row">
+          <div class="rlab" style="font-weight:800">Net cost<small>same result, less spend</small></div>
+          <div class="track"><div class="bar" style="width:27%;background:var(--good)"></div></div>
+          <div class="val" style="color:var(--good)">27%</div>
+        </div>
+      </div>
+      <div class="note">Illustrative breakdown of the mechanisms. Actual savings vary by repository and
+      are reported per mechanism by <b>nexus&nbsp;savings</b> — measured, never assumed.</div>
+    </div>
+
+    <div class="right">
+      <div class="lbl">How each one works</div>
+      <div class="mech">
+        <div class="m"><div class="dot" style="background:var(--blue)"></div><div>
+          <h3>Compress the context</h3><p>The context window is compressed in flight before it's sent — the signal is kept, the bulk isn't.</p></div></div>
+        <div class="m"><div class="dot" style="background:var(--orange)"></div><div>
+          <h3>Filter tool output</h3><p>A 5,000-line build log or <code>ls&nbsp;-R</code> is trimmed before it re-enters context. You never pay for noise.</p></div></div>
+        <div class="m"><div class="dot" style="background:var(--aqua)"></div><div>
+          <h3>Reuse prior searches</h3><p>Everything the agent already searched, read, or derived is indexed and served back — re-discovery becomes a lookup.</p></div></div>
+        <div class="m"><div class="dot" style="background:var(--yellow)"></div><div>
+          <h3>Route by outcome</h3><p>Proposes the cheapest model your repo's own results justify. Most turns don't need the flagship.</p></div></div>
+        <div class="m"><div class="dot" style="background:var(--violet)"></div><div>
+          <h3>Codify repeats → 0 tokens</h3><p>Recurring command sequences replay as scripts — no agent turn, no tokens at all.</p></div></div>
+      </div>
+      <div class="foot"><span class="pill">$ nexus savings</span> saved this week, broken down by mechanism</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.3
+- **Fixed a packaging bug that caused `nexus` to fail with "permission denied" on some installs.**
+  The npm launcher (`bin/nexus.js`) was published without its executable bit, so package managers
+  that preserve tarball file modes (pnpm, and some yarn/extraction paths) could not execute it. The
+  launcher now ships mode `0755`.
+
 ## 0.2.2
 - Documentation refresh (README styling); no functional changes.
 
